@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>File Packer Unpacker</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #1f1f1f;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    .container {
+      display: none;
+      flex-direction: column;
+      gap: 15px;
+      padding: 20px;
+      background-color: #2d2d2d;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #555;
+    }
+    input, button {
+      padding: 10px;
+      font-size: 16px;
+    }
+    button {
+      cursor: pointer;
+    }
+    #login, #menu, #pack, #unpack {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="login" class="container" style="display: flex;">
+    <h2>Login</h2>
+    <input type="text" id="username" placeholder="Username" />
+    <input type="password" id="password" placeholder="Password" />
+    <button onclick="authenticate()">Login</button>
+    <p id="loginMsg"></p>
+  </div>
+
+  <div id="menu" class="container">
+    <h2>Welcome</h2>
+    <button onclick="showPack()">Pack</button>
+    <button onclick="showUnpack()">Unpack</button>
+  </div>
+
+  <div id="pack" class="container">
+    <h3>Pack Directory</h3>
+    <input type="text" id="packDir" placeholder="Directory Name" />
+    <input type="text" id="packFile" placeholder="Output File Name" />
+    <button onclick="performPack()">Submit</button>
+    <button onclick="goBack()">Back</button>
+  </div>
+
+  <div id="unpack" class="container">
+    <h3>Unpack File</h3>
+    <input type="text" id="unpackFile" placeholder="Packed File Name" />
+    <button onclick="performUnpack()">Extract Here</button>
+    <button onclick="goBack()">Back</button>
+  </div>
+
+  <script>
+    let attempts = 3;
+
+    function authenticate() {
+      const user = document.getElementById('username').value;
+      const pass = document.getElementById('password').value;
+
+      if (user === "MarvellousAdmin" && pass === "MarvellousAdmin") {
+        document.getElementById("login").style.display = "none";
+        document.getElementById("menu").style.display = "flex";
+      } else {
+        attempts--;
+        document.getElementById("loginMsg").innerText = `Invalid credentials. Attempts left: ${attempts}`;
+        if (attempts <= 0) {
+          alert("Maximum attempts exceeded. Closing application.");
+          window.close(); // won't work in most browsers
+        }
+      }
+    }
+
+    function showPack() {
+      document.getElementById("menu").style.display = "none";
+      document.getElementById("pack").style.display = "flex";
+    }
+
+    function showUnpack() {
+      document.getElementById("menu").style.display = "none";
+      document.getElementById("unpack").style.display = "flex";
+    }
+
+    function goBack() {
+      document.getElementById("pack").style.display = "none";
+      document.getElementById("unpack").style.display = "none";
+      document.getElementById("menu").style.display = "flex";
+    }
+
+    function performPack() {
+      const dir = document.getElementById('packDir').value;
+      const file = document.getElementById('packFile').value;
+      alert(`Packing directory "${dir}" into file "${file}" (simulate)`);
+      goBack();
+    }
+
+    function performUnpack() {
+      const file = document.getElementById('unpackFile').value;
+      alert(`Unpacking file "${file}" (simulate)`);
+      goBack();
+    }
+  </script>
+
+</body>
+</html>
